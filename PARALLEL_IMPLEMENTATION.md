@@ -219,12 +219,17 @@ make restart-parallel       # Restart services
 ```bash
 #Build the Docker Images
 docker compose -f docker-compose-parallel.yml build
+docker compose -f docker-compose-parallel.yml build parallel-client
 
 #Start the Services
-docker compose -f docker-compose-parallel.yml up -d 
+docker compose -f docker-compose-parallel.yml up -d
+docker compose -f docker-compose-parallel.yml up parallel-client
 
 #Run the Pipeline Test
-docker compose -f docker-compose-parallel.yml run --rm parallel-client python app.py big.txt
+docker compose -f docker-compose-parallel.yml run --rm parallel-client python parallel_client.py
+
+#Run the Performance Benchmark 
+docker compose -f docker-compose-parallel.yml run --rm parallel-client python benchmark.py
 
 #View Logs (Optional)
 docker compose -f docker-compose-parallel.yml logs -f
