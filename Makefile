@@ -97,7 +97,7 @@ down:
 
 clean: down
 	@echo "🧹 Cleaning REST setup..."
-	docker system prune -f
+	docker system prune -a --volumes --force
 	@echo "✅ REST cleanup complete!"
 
 restart: down up

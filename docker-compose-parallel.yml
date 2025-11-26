@@ -20,7 +20,7 @@ services:
       dockerfile: service1-input/Dockerfile
     container_name: rest-service1b
     ports:
-      - "8055:8055"
+      - "18055:8055"
     environment:
       - SERVICE_PORT=8055
       - INSTANCE_ID=b
@@ -63,7 +63,7 @@ services:
       dockerfile: service1-loadbalancer/Dockerfile
     container_name: rest-service1-lb
     ports:
-      - "8061:8061"
+      - "18061:8061"
     environment:
       - SERVICE_PORT=8061
     networks:
