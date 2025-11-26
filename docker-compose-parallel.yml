@@ -1,0 +1,316 @@
+services:
+  # ==================== SERVICE 1 INSTANCES (4 instances) ====================
+  service1a:
+    build:
+      context: .
+      dockerfile: service1-input/Dockerfile
+    container_name: rest-service1a
+    ports:
+      - "8051:8051"
+    environment:
+      - SERVICE_PORT=8051
+      - INSTANCE_ID=a
+      - SERVICE2_URL=http://service2-loadbalancer:8062
+    networks:
+      - rest-network
+
+  service1b:
+    build:
+      context: .
+      dockerfile: service1-input/Dockerfile
+    container_name: rest-service1b
+    ports:
+      - "8055:8055"
+    environment:
+      - SERVICE_PORT=8055
+      - INSTANCE_ID=b
+      - SERVICE2_URL=http://service2-loadbalancer:8062
+    networks:
+      - rest-network
+
+  service1c:
+    build:
+      context: .
+      dockerfile: service1-input/Dockerfile
+    container_name: rest-service1c
+    ports:
+      - "8057:8057"
+    environment:
+      - SERVICE_PORT=8057
+      - INSTANCE_ID=c
+      - SERVICE2_URL=http://service2-loadbalancer:8062
+    networks:
+      - rest-network
+
+  service1d:
+    build:
+      context: .
+      dockerfile: service1-input/Dockerfile
+    container_name: rest-service1d
+    ports:
+      - "8059:8059"
+    environment:
+      - SERVICE_PORT=8059
+      - INSTANCE_ID=d
+      - SERVICE2_URL=http://service2-loadbalancer:8062
+    networks:
+      - rest-network
+
+  # Service 1 Load Balancer
+  service1-loadbalancer:
+    build:
+      context: .
+      dockerfile: service1-loadbalancer/Dockerfile
+    container_name: rest-service1-lb
+    ports:
+      - "8061:8061"
+    environment:
+      - SERVICE_PORT=8061
+    networks:
+      - rest-network
+    depends_on:
+      - service1a
+      - service1b
+      - service1c
+      - service1d
+
+  # ==================== SERVICE 2 INSTANCES (4 instances) ====================
+  service2a:
+    build:
+      context: .
+      dockerfile: service2-preprocess/Dockerfile
+    container_name: rest-service2a
+    ports:
+      - "8052:8052"
+    environment:
+      - SERVICE_PORT=8052
+      - INSTANCE_ID=a
+      - SERVICE3_URL=http://service3-loadbalancer:8063
+    networks:
+      - rest-network
+
+  service2b:
+    build:
+      context: .
+      dockerfile: service2-preprocess/Dockerfile
+    container_name: rest-service2b
+    ports:
+      - "8056:8056"
+    environment:
+      - SERVICE_PORT=8056
+      - INSTANCE_ID=b
+      - SERVICE3_URL=http://service3-loadbalancer:8063
+    networks:
+      - rest-network
+
+  service2c:
+    build:
+      context: .
+      dockerfile: service2-preprocess/Dockerfile
+    container_name: rest-service2c
+    ports:
+      - "8058:8058"
+    environment:
+      - SERVICE_PORT=8058
+      - INSTANCE_ID=c
+      - SERVICE3_URL=http://service3-loadbalancer:8063
+    networks:
+      - rest-network
+
+  service2d:
+    build:
+      context: .
+      dockerfile: service2-preprocess/Dockerfile
+    container_name: rest-service2d
+    ports:
+      - "8060:8060"
+    environment:
+      - SERVICE_PORT=8060
+      - INSTANCE_ID=d
+      - SERVICE3_URL=http://service3-loadbalancer:8063
+    networks:
+      - rest-network
+
+  # Service 2 Load Balancer
+  service2-loadbalancer:
+    build:
+      context: .
+      dockerfile: service2-loadbalancer/Dockerfile
+    container_name: rest-service2-lb
+    ports:
+      - "8062:8062"
+    environment:
+      - SERVICE_PORT=8062
+    networks:
+      - rest-network
+    depends_on:
+      - service2a
+      - service2b
+      - service2c
+      - service2d
+
+  # ==================== SERVICE 3 INSTANCES (4 instances) ====================
+  service3a:
+    build:
+      context: .
+      dockerfile: service3-analysis/Dockerfile
+    container_name: rest-service3a
+    ports:
+      - "8053:8053"
+    environment:
+      - SERVICE_PORT=8053
+      - INSTANCE_ID=a
+      - SERVICE4_URL=http://service4-loadbalancer:8064
+    networks:
+      - rest-network
+
+  service3b:
+    build:
+      context: .
+      dockerfile: service3-analysis/Dockerfile
+    container_name: rest-service3b
+    ports:
+      - "8065:8065"
+    environment:
+      - SERVICE_PORT=8065
+      - INSTANCE_ID=b
+      - SERVICE4_URL=http://service4-loadbalancer:8064
+    networks:
+      - rest-network
+
+  service3c:
+    build:
+      context: .
+      dockerfile: service3-analysis/Dockerfile
+    container_name: rest-service3c
+    ports:
+      - "8067:8067"
+    environment:
+      - SERVICE_PORT=8067
+      - INSTANCE_ID=c
+      - SERVICE4_URL=http://service4-loadbalancer:8064
+    networks:
+      - rest-network
+
+  service3d:
+    build:
+      context: .
+      dockerfile: service3-analysis/Dockerfile
+    container_name: rest-service3d
+    ports:
+      - "8069:8069"
+    environment:
+      - SERVICE_PORT=8069
+      - INSTANCE_ID=d
+      - SERVICE4_URL=http://service4-loadbalancer:8064
+    networks:
+      - rest-network
+
+  # Service 3 Load Balancer
+  service3-loadbalancer:
+    build:
+      context: .
+      dockerfile: service3-loadbalancer/Dockerfile
+    container_name: rest-service3-lb
+    ports:
+      - "8063:8063"
+    environment:
+      - SERVICE_PORT=8063
+    networks:
+      - rest-network
+    depends_on:
+      - service3a
+      - service3b
+      - service3c
+      - service3d
+
+  # ==================== SERVICE 4 INSTANCES (4 instances) ====================
+  service4a:
+    build:
+      context: .
+      dockerfile: service4-report/Dockerfile
+    container_name: rest-service4a
+    ports:
+      - "8054:8054"
+    environment:
+      - SERVICE_PORT=8054
+      - INSTANCE_ID=a
+    networks:
+      - rest-network
+
+  service4b:
+    build:
+      context: .
+      dockerfile: service4-report/Dockerfile
+    container_name: rest-service4b
+    ports:
+      - "8066:8066"
+    environment:
+      - SERVICE_PORT=8066
+      - INSTANCE_ID=b
+    networks:
+      - rest-network
+
+  service4c:
+    build:
+      context: .
+      dockerfile: service4-report/Dockerfile
+    container_name: rest-service4c
+    ports:
+      - "8068:8068"
+    environment:
+      - SERVICE_PORT=8068
+      - INSTANCE_ID=c
+    networks:
+      - rest-network
+
+  service4d:
+    build:
+      context: .
+      dockerfile: service4-report/Dockerfile
+    container_name: rest-service4d
+    ports:
+      - "8070:8070"
+    environment:
+      - SERVICE_PORT=8070
+      - INSTANCE_ID=d
+    networks:
+      - rest-network
+
+  # Service 4 Load Balancer
+  service4-loadbalancer:
+    build:
+      context: .
+      dockerfile: service4-loadbalancer/Dockerfile
+    container_name: rest-service4-lb
+    ports:
+      - "8064:8064"
+    environment:
+      - SERVICE_PORT=8064
+    networks:
+      - rest-network
+    depends_on:
+      - service4a
+      - service4b
+      - service4c
+      - service4d
+
+  # ==================== CLIENT ====================
+  parallel-client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    container_name: rest-parallel-client
+    environment:
+      - SERVICE1_URL=http://service1-loadbalancer:8061
+    networks:
+      - rest-network
+    depends_on:
+      - service1-loadbalancer
+      - service2-loadbalancer
+      - service3-loadbalancer
+      - service4-loadbalancer
+
+networks:
+  rest-network:
+    driver: bridge
