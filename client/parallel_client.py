@@ -139,7 +139,7 @@ def read_text_files(datasets_path='/app/datasets'):
     
     txt_files = glob.glob(os.path.join(datasets_path, '*.txt'))
     if not txt_files:
-        print(f"WARNING: No .txt files found in '{datasets_path}'")
+        # Don't show warning if no .txt files found
         return []
 
     print(f"Found {len(txt_files)} .txt file(s):")

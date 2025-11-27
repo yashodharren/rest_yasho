@@ -90,8 +90,8 @@ def load_dataset(filename: str) -> str:
 
 async def main():
     """Main client function"""
-    # Default to 'sample.txt' if no command-line argument is given
-    dataset_file = sys.argv[1] if len(sys.argv) > 1 else 'sample.txt'
+    # Default to 'big.txt' if no command-line argument is given
+    dataset_file = sys.argv[1] if len(sys.argv) > 1 else 'big.txt'
     
     try:
         test_text = load_dataset(dataset_file)

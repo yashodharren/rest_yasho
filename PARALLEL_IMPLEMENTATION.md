@@ -239,6 +239,9 @@ docker compose -f docker-compose-parallel.yml down
 
 #Rebuild All Docker Images
 docker compose -f docker-compose-parallel.yml build --no-cache
+
+#Remove cache memory
+docker system prune -af --volumes
 ```
 
 ## Key Features
